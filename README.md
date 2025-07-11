@@ -1,49 +1,110 @@
-# Sergio Blog App
+# 🚀 AI-Powered Blog App
 
-A modern blog application built with Next.js 13, featuring:
+An intelligent blog application built with Next.js 13, TypeScript, and OpenAI integration. Features automated content generation, admin dashboard, and scheduled publishing.
 
-- 🎨 Dark/Light theme toggle
-- 📱 Responsive design
-- 🧭 Complete navigation
-- 📝 Authentication system
-- 🔥 Featured posts section
-- 🏷️ Categories with icons
-- 📋 Post listing with pagination
-- 📌 Popular posts sidebar
+## ✨ Features
 
-## Getting Started
+- **� AI Content Generation**: Automated blog post creation using OpenAI GPT
+- **� Scheduled Publishing**: Daily content generation at 9 AM
+- **�️ Admin Dashboard**: Real-time monitoring and manual controls
+- **🔄 Hybrid AI System**: Fallback system for reliable content generation
+- **� Responsive Design**: Mobile-friendly interface
+- **🌙 Dark/Light Mode**: Theme toggle functionality
+
+## 🛠️ Tech Stack
+
+- **Framework**: Next.js 13 (App Router)
+- **Language**: TypeScript
+- **Styling**: CSS Modules
+- **AI Integration**: OpenAI GPT API
+- **Deployment**: Vercel
+- **Automation**: GitHub Actions + Vercel Cron Jobs
+
+## 🚀 Getting Started
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/sergioperez8042/blog_app.git
+   cd blog_app/next-blog
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Set up environment variables**
+   Create a `.env.local` file:
+   ```env
+   OPENAI_API_KEY=your_openai_api_key_here
+   ```
+
+4. **Run the development server**
+   ```bash
+   npm run dev
+   ```
+
+5. **Open your browser**
+   Navigate to [http://localhost:3000](http://localhost:3000)
+
+## 📊 Admin Dashboard
+
+Access the admin dashboard at `/admin` to:
+- Monitor scheduled content generation
+- Generate content manually
+- View activity logs
+- Check system statistics
+
+## 🔧 API Endpoints
+
+- `GET /api/auto-content` - Get scheduler status
+- `POST /api/auto-content` - Trigger content generation
+- `GET /api/posts` - Get all posts
+- `POST /api/generate-content-hybrid` - Generate content with AI
+
+## 📝 Content Categories
+
+The AI generates content across 5 categories:
+- **Technology** - Latest tech trends and tutorials
+- **Lifestyle** - Tips and advice for better living
+- **Travel** - Destination guides and travel tips
+- **Food** - Recipes and culinary experiences
+- **Culture** - Arts, entertainment, and cultural insights
+
+## 🌐 Deployment
+
+### Vercel (Recommended)
+
+1. **Connect your repository** to Vercel
+2. **Set environment variables** in Vercel dashboard
+3. **Enable cron jobs** for automated publishing
+4. **Deploy** - Vercel will automatically build and deploy
+
+### Manual Deployment
 
 ```bash
-# Install dependencies
-yarn install
-
-# Run development server
-yarn dev
-
-# Build for production
-yarn build
+npm run build
+npm start
 ```
 
-## Tech Stack
+## 🤝 Contributing
 
-- Next.js 13.4.19
-- React 18
-- CSS Modules
-- Context API
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Submit a pull request
 
-Built by Sergio Pérez 🚀
+## 📄 License
 
-## Learn More
+This project is licensed under the MIT License.
 
-To learn more about Next.js, take a look at the following resources:
+## 🙏 Acknowledgments
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- OpenAI for the GPT API
+- Next.js team for the amazing framework
+- Vercel for seamless deployment
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+**Last updated**: July 2025
+**Version**: 0.1.2
