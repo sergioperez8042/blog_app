@@ -1,8 +1,5 @@
-import { NextRequest, NextResponse } from 'next/server';
-import OpenAI from 'openai';
-
-// Generador de contenido mock para desarrollo/respaldo
-const mockContentGenerator = {
+// Generador de contenido mock para desarrollo
+export const mockContentGenerator = {
   ideas: {
     'Technology': [
       'Análisis de las principales características y mejoras',
@@ -41,11 +38,11 @@ const mockContentGenerator = {
     ]
   },
 
-  generateContent: (title: string, category: string, contentType: string) => {
+  generateContent: (title, category, contentType) => {
     const timestamp = new Date().toLocaleString();
     
     if (contentType === 'ideas') {
-      const categoryIdeas = mockContentGenerator.ideas[category as keyof typeof mockContentGenerator.ideas] || mockContentGenerator.ideas['Technology'];
+      const categoryIdeas = mockContentGenerator.ideas[category] || mockContentGenerator.ideas['Technology'];
       return `Ideas para el artículo "${title}":
 
 ${categoryIdeas.map((idea, index) => `${index + 1}. ${idea}`).join('\n')}
@@ -64,7 +61,7 @@ Preguntas clave a responder:
 
 Tono sugerido: Informativo, accesible y orientado a resultados prácticos.
 
---- Generado con IA Mock el ${timestamp} ---`;
+--- Generado el ${timestamp} ---`;
     }
     
     if (contentType === 'outline') {
@@ -96,7 +93,7 @@ V. Conclusión
    • Recomendaciones finales
    • Llamada a la acción
 
---- Generado con IA Mock el ${timestamp} ---`;
+--- Generado el ${timestamp} ---`;
     }
     
     if (contentType === 'full') {
@@ -138,115 +135,9 @@ Conclusión
 
 La evolución tecnológica continúa transformando la manera en que trabajamos y nos relacionamos con las herramientas digitales. Adoptar estas innovaciones de manera estratégica puede proporcionar ventajas competitivas significativas.
 
---- Generado con IA Mock el ${timestamp} ---`;
+--- Generado el ${timestamp} ---`;
     }
     
     return 'Contenido generado exitosamente.';
   }
 };
-
-export async function POST(request: NextRequest) {
-  try {
-    const { title, category, contentType } = await request.json();
-
-    if (!title || !category) {
-      return NextResponse.json(
-        { error: 'Título y categoría son requeridos' },
-        { status: 400 }
-      );
-    }
-
-    // Verificar si OpenAI está disponible
-    if (!process.env.OPENAI_API_KEY) {
-      console.log('OpenAI API key not configured, using mock generator');
-      const mockContent = mockContentGenerator.generateContent(title, category, contentType);
-      return NextResponse.json({
-        content: mockContent,
-        success: true,
-        usedMock: true
-      });
-    }
-
-    try {
-      const openai = new OpenAI({
-        apiKey: process.env.OPENAI_API_KEY,
-      });
-
-      let prompt = '';
-      
-      if (contentType === 'full') {
-        prompt = `Escribe un artículo completo de blog sobre "${title}" en la categoría ${category}. 
-        El artículo debe tener:
-        - Una introducción atractiva
-        - Desarrollo del tema con varios párrafos
-        - Conclusión
-        - Tono profesional pero accesible
-        - Aproximadamente 500-800 palabras`;
-      } else if (contentType === 'outline') {
-        prompt = `Crea un esquema detallado para un artículo de blog sobre "${title}" en la categoría ${category}. 
-        Incluye:
-        - Introducción
-        - 3-5 puntos principales
-        - Conclusión
-        - Sugerencias de subtemas`;
-      } else {
-        prompt = `Genera ideas y sugerencias para un artículo sobre "${title}" en la categoría ${category}. 
-        Incluye:
-        - 3-5 ideas principales
-        - Ángulos interesantes
-        - Preguntas que podrían responderse
-        - Tono sugerido`;
-      }
-
-      console.log('Generating content with OpenAI...');
-
-      const completion = await openai.chat.completions.create({
-        model: "gpt-3.5-turbo",
-        messages: [
-          {
-            role: "system",
-            content: "Eres un escritor experto de blogs que crea contenido de alta calidad, informativo y atractivo."
-          },
-          {
-            role: "user",
-            content: prompt
-          }
-        ],
-        max_tokens: 1000,
-        temperature: 0.7,
-      });
-
-      const generatedContent = completion.choices[0]?.message?.content;
-
-      if (!generatedContent) {
-        throw new Error('No content generated from OpenAI');
-      }
-
-      console.log('Content generated successfully with OpenAI');
-      return NextResponse.json({
-        content: generatedContent,
-        success: true,
-        usedMock: false
-      });
-
-    } catch (openaiError: any) {
-      console.log('OpenAI error, falling back to mock generator:', openaiError.message);
-      
-      // Si hay error de cuota o cualquier otro error de OpenAI, usar mock
-      const mockContent = mockContentGenerator.generateContent(title, category, contentType);
-      return NextResponse.json({
-        content: mockContent + '\n\n⚠️ Nota: Contenido generado con IA Mock (OpenAI no disponible)',
-        success: true,
-        usedMock: true,
-        openaiError: openaiError.code || 'unknown'
-      });
-    }
-
-  } catch (error: any) {
-    console.error('Error generating content:', error);
-    return NextResponse.json(
-      { error: `Error interno del servidor: ${error.message || 'Unknown error'}` },
-      { status: 500 }
-    );
-  }
-}

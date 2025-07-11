@@ -45,18 +45,25 @@ const WritePage: React.FC = () => {
         }),
       });
 
+      const data = await response.json();
+
       if (!response.ok) {
-        throw new Error('Error al generar contenido');
+        throw new Error(data.error || 'Error al generar contenido');
       }
 
-      const data = await response.json();
       setFormData(prev => ({
         ...prev,
         content: data.content
       }));
+
+      // Mostrar mensaje si se usó el generador mock
+      if (data.usedMock) {
+        alert('⚠️ Contenido generado con IA Mock (OpenAI no disponible temporalmente)');
+      }
+
     } catch (error) {
       console.error('Error:', error);
-      alert('Error al generar contenido. Por favor, intenta de nuevo.');
+      alert(`Error al generar contenido: ${error instanceof Error ? error.message : 'Error desconocido'}`);
     } finally {
       setIsGenerating(false);
     }
