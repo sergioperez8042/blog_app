@@ -1,9 +1,9 @@
-import React from 'react'
-import styles from './menu.module.css'
-import Link from 'next/link'
-import Image from 'next/image'
+import React from 'react';
+import styles from './menu.module.css';
+import Link from 'next/link';
+import Image from 'next/image';
 
-const Menu = () => {
+const Menu: React.FC = () => {
   return (
     <div className={styles.container}>
       <h2 className={styles.subtitle}>What&apos;s hot</h2>
@@ -81,7 +81,7 @@ const Menu = () => {
         </Link>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Menu
+export default Menu;

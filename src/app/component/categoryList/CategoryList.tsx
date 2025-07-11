@@ -1,9 +1,9 @@
-import React from 'react'
-import styles from './categoryList.module.css'
-import Link from 'next/link'
-import Image from 'next/image'
+import React from 'react';
+import styles from './categoryList.module.css';
+import Link from 'next/link';
+import Image from 'next/image';
 
-const CategoryList = () => {
+const CategoryList: React.FC = () => {
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Popular Categories</h1>
@@ -34,7 +34,7 @@ const CategoryList = () => {
         </Link>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default CategoryList
+export default CategoryList;

@@ -1,7 +1,7 @@
-import React from 'react'
-import styles from './page.module.css'
+import React from 'react';
+import styles from './page.module.css';
 
-const LoginPage = () => {
+const LoginPage: React.FC = () => {
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Login</h1>
@@ -19,7 +19,7 @@ const LoginPage = () => {
         <button className={styles.button}>Login</button>
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default LoginPage
+export default LoginPage;

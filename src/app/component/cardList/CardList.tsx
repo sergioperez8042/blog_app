@@ -1,10 +1,10 @@
-import React from 'react'
-import styles from './cardList.module.css'
-import Pagination from '../pagination/Pagination'
-import Image from 'next/image'
-import Link from 'next/link'
+import React from 'react';
+import styles from './cardList.module.css';
+import Pagination from '../pagination/Pagination';
+import Image from 'next/image';
+import Link from 'next/link';
 
-const CardList = () => {
+const CardList: React.FC = () => {
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Recent Posts</h1>
@@ -66,7 +66,7 @@ const CardList = () => {
       </div>
       <Pagination/>
     </div>
-  )
-}
+  );
+};
 
-export default CardList
+export default CardList;

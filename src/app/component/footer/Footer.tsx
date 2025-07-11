@@ -1,9 +1,9 @@
-import React from 'react'
-import styles from './footer.module.css'
-import Image from 'next/image'
-import Link from 'next/link'
+import React from 'react';
+import styles from './footer.module.css';
+import Image from 'next/image';
+import Link from 'next/link';
 
-const Footer = () => {
+const Footer: React.FC = () => {
   return (
     <div className={styles.container}>
       <div className={styles.info}>
@@ -45,7 +45,7 @@ const Footer = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Footer
+export default Footer;

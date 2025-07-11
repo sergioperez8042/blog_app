@@ -1,8 +1,8 @@
-import React from 'react'
-import styles from './featured.module.css'
-import Image from 'next/image'
+import React from 'react';
+import styles from './featured.module.css';
+import Image from 'next/image';
 
-const Featured = () => {
+const Featured: React.FC = () => {
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>
@@ -21,7 +21,7 @@ const Featured = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Featured
+export default Featured;
