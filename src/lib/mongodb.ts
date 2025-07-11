@@ -15,10 +15,14 @@ if (!cached) {
 
 export async function connectDB() {
   if (cached.conn) {
+    console.log('📡 Usando conexión MongoDB existente');
     return cached.conn;
   }
 
   if (!cached.promise) {
+    console.log('🔄 Creando nueva conexión a MongoDB...');
+    console.log('📍 URI:', MONGODB_URI.replace(/\/\/[^:]+:[^@]+@/, '//***:***@')); // Ocultar credenciales
+    
     const opts = {
       bufferCommands: false,
       serverSelectionTimeoutMS: 10000,
@@ -26,6 +30,7 @@ export async function connectDB() {
     };
 
     cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
+      console.log('✅ MongoDB conectado exitosamente');
       return mongoose;
     });
   }
@@ -33,6 +38,7 @@ export async function connectDB() {
   try {
     cached.conn = await cached.promise;
   } catch (e) {
+    console.error('❌ Error conectando a MongoDB:', e);
     cached.promise = null;
     throw e;
   }

@@ -101,8 +101,15 @@ class AutoContentScheduler {
       
       if (isProduction) {
         // Usar almacén global para producción
-        await PostStore.addPost(post);
-        console.log('💾 Post guardado exitosamente en almacén global (producción)');
+        console.log('🔄 Guardando en base de datos (producción)...');
+        const savedPost = await PostStore.addPost(post);
+        
+        if (savedPost) {
+          console.log('✅ Post guardado exitosamente en base de datos:', savedPost.id);
+        } else {
+          console.error('❌ Error: No se pudo guardar el post en la base de datos');
+        }
+        
         return;
       }
       
