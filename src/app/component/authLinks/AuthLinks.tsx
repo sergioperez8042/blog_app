@@ -61,10 +61,3 @@ const AuthLinks: React.FC = () => {
 };
 
 export default AuthLinks;
-        </div>
-      )}
-    </div>
-  );
-};
-
-export default AuthLinks;
