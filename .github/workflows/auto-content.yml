@@ -1,0 +1,58 @@
+name: Auto Content Generator
+
+on:
+  schedule:
+    # Ejecutar todos los días a las 9:00 AM UTC (ajusta según tu zona horaria)
+    - cron: '0 9 * * *'
+  workflow_dispatch: # Permite ejecutar manualmente
+
+jobs:
+  generate-content:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+        cache: 'yarn'
+    
+    - name: Install dependencies
+      run: yarn install --frozen-lockfile
+    
+    - name: Generate daily content
+      env:
+        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
+      run: |
+        # Iniciar el servidor en background
+        yarn build
+        yarn start &
+        
+        # Esperar a que el servidor esté listo
+        sleep 30
+        
+        # Llamar al endpoint de generación automática
+        curl -X POST http://localhost:3000/api/auto-content \
+          -H "Content-Type: application/json" \
+          -d '{}' \
+          || echo "Error generando contenido, pero continuando..."
+    
+    - name: Commit and push changes
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add data/posts.json
+        git diff --staged --quiet || git commit -m "🤖 Auto-generated daily content - $(date)"
+        git push
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    
+    - name: Deploy to production
+      if: github.ref == 'refs/heads/main'
+      run: |
+        # Trigger deployment webhook (opcional)
+        echo "Content generated and committed successfully"

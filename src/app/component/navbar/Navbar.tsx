@@ -20,6 +20,7 @@ const Navbar: React.FC = () => {
         <Link href="/" className={styles.link}>Homepage</Link>
         <Link href="/posts" className={styles.link}>Posts</Link>
         <Link href="/write" className={styles.link}>Write</Link>
+        <Link href="/admin" className={styles.link}>Admin</Link>
         <Link href="/contact" className={styles.link}>Contact</Link>
         <Link href="/about" className={styles.link}>About</Link>
         <AuthLinks />

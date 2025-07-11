@@ -38,6 +38,16 @@
     color: var(--primary-color);
 }
 
+/* Admin link special styling */
+.link:nth-child(5) {
+    color: #ff6b35;
+    font-weight: 600;
+}
+
+.link:nth-child(5):hover {
+    color: #ff8c42;
+}
+
 /* Responsive */
 @media screen and (max-width: 1024px) {
     .social {
