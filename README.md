@@ -1,22 +1,37 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Sergio Blog App
+
+A modern blog application built with Next.js 13, featuring:
+
+- 🎨 Dark/Light theme toggle
+- 📱 Responsive design
+- 🧭 Complete navigation
+- 📝 Authentication system
+- 🔥 Featured posts section
+- 🏷️ Categories with icons
+- 📋 Post listing with pagination
+- 📌 Popular posts sidebar
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
-npm run dev
-# or
+# Install dependencies
+yarn install
+
+# Run development server
 yarn dev
-# or
-pnpm dev
+
+# Build for production
+yarn build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Tech Stack
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+- Next.js 13.4.19
+- React 18
+- CSS Modules
+- Context API
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Built by Sergio Pérez 🚀
 
 ## Learn More
 

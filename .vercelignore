@@ -1,0 +1,16 @@
+# Ignore babel config files
+.babelrc
+.babelrc.js
+.babelrc.json
+babel.config.js
+babel.config.json
+
+# Ignore development files
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Ignore build cache
+.next/
+.vercel/
