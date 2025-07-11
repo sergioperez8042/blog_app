@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './featured.module.css';
 import Image from 'next/image';
 import Link from 'next/link';
+import { PostStore } from '@/lib/postStore';
 
 interface Post {
   id: string;
@@ -14,27 +15,9 @@ interface Post {
 }
 
 // Función para obtener el último post
-async function getLatestPost(): Promise<Post | null> {
-  try {
-    // Para server components, usamos la URL interna del servidor
-    const baseUrl = process.env.VERCEL_URL 
-      ? `https://${process.env.VERCEL_URL}` 
-      : 'http://localhost:3000';
-    
-    const response = await fetch(`${baseUrl}/api/posts`, {
-      next: { revalidate: 60 } // Revalidate every 60 seconds
-    });
-    
-    if (!response.ok) {
-      throw new Error('Failed to fetch posts');
-    }
-    
-    const data = await response.json();
-    return data.posts?.[0] || null;
-  } catch (error) {
-    console.error('Error fetching latest post:', error);
-    return null;
-  }
+function getLatestPost(): Post | null {
+  const posts = PostStore.getAllPosts();
+  return posts.length > 0 ? posts[0] : null;
 }
 
 // Función para obtener la imagen de categoría
@@ -56,8 +39,8 @@ function truncateContent(content: string, maxLength: number = 200): string {
   return content.substring(0, maxLength) + '...';
 }
 
-const Featured: React.FC = async () => {
-  const latestPost = await getLatestPost();
+const Featured: React.FC = () => {
+  const latestPost = getLatestPost();
 
   return (
     <div className={styles.container}>
