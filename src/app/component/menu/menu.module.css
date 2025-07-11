@@ -93,6 +93,15 @@
   font-size: 12px;
 }
 
+.likes {
+  color: var(--primary-color);
+  font-size: 12px;
+  font-weight: 600;
+  background: var(--softBg);
+  padding: 2px 6px;
+  border-radius: 8px;
+}
+
 .aiTag {
   background: linear-gradient(45deg, #ff6b35, #f7931e);
   color: white;

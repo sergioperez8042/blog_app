@@ -16,8 +16,8 @@ interface Post {
 
 // Función para obtener el último post
 function getLatestPost(): Post | null {
-  const posts = PostStore.getAllPosts();
-  return posts.length > 0 ? posts[0] : null;
+  const latestPosts = PostStore.getLatestPosts(1);
+  return latestPosts.length > 0 ? latestPosts[0] : null;
 }
 
 // Función para obtener la imagen de categoría
@@ -45,7 +45,7 @@ const Featured: React.FC = () => {
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>
-        <b>Hey, Welcome to our blog!</b> Discover stories and creative ideas.
+        <b>Recent Posts</b> Lo más nuevo en nuestro blog
       </h1>
       <div className={styles.post}>
         <div className={styles.imgContainer}>

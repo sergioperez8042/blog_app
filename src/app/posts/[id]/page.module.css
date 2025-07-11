@@ -174,6 +174,52 @@
   background: var(--softBg);
 }
 
+.likesSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin: 2rem 0;
+  padding: 2rem;
+  background: var(--softBg);
+  border-radius: 15px;
+  text-align: center;
+}
+
+.likeButton {
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(79, 172, 254, 0.3);
+}
+
+.likeButton:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(79, 172, 254, 0.4);
+}
+
+.likeButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.likeButton.liked {
+  background: linear-gradient(135deg, #56ab2f 0%, #a8e6cf 100%);
+  box-shadow: 0 4px 15px rgba(86, 171, 47, 0.3);
+}
+
+.likeText {
+  color: var(--textColorSoft);
+  font-size: 0.9rem;
+  font-style: italic;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .infoContainer {
@@ -201,5 +247,10 @@
   
   .meta {
     justify-content: center;
+  }
+
+  .likeButton {
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
   }
 }

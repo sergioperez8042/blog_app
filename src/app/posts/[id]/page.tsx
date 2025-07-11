@@ -1,4 +1,6 @@
-import React from 'react';
+'use client';
+
+import React, { useState } from 'react';
 import styles from './page.module.css';
 import Image from 'next/image';
 import { PostStore } from '@/lib/postStore';
@@ -38,6 +40,17 @@ function formatDate(dateString: string): string {
 export default function PostPage({ params }: PostPageProps) {
   // Obtener el post por ID
   const post = PostStore.getPostById(params.id);
+  const [likes, setLikes] = useState(post?.likes || 0);
+  const [hasLiked, setHasLiked] = useState(false);
+
+  const handleLike = () => {
+    if (post && !hasLiked) {
+      if (PostStore.likePost(post.id)) {
+        setLikes(likes + 1);
+        setHasLiked(true);
+      }
+    }
+  };
 
   if (!post) {
     return (
@@ -94,6 +107,19 @@ export default function PostPage({ params }: PostPageProps) {
             </div>
           </div>
         )}
+        
+        <div className={styles.likesSection}>
+          <button 
+            onClick={handleLike} 
+            className={`${styles.likeButton} ${hasLiked ? styles.liked : ''}`}
+            disabled={hasLiked}
+          >
+            👍 {likes} Me gusta
+          </button>
+          <span className={styles.likeText}>
+            {hasLiked ? '¡Gracias por tu like!' : 'Si te gustó este post, dale me gusta'}
+          </span>
+        </div>
         
         <div className={styles.actions}>
           <a href="/" className={styles.backButton}>← Volver al inicio</a>
