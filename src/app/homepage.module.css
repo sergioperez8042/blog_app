@@ -1,0 +1,30 @@
+.container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+  padding: 20px 0;
+}
+
+.content {
+  display: flex;
+  gap: 50px;
+  margin-top: 40px;
+}
+
+@media screen and (max-width: 1024px) {
+  .content {
+    flex-direction: column;
+    gap: 30px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    gap: 40px;
+  }
+  
+  .content {
+    gap: 20px;
+  }
+}

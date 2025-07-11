@@ -1,0 +1,101 @@
+.container {
+  margin: 50px 0;
+}
+
+.title {
+  font-size: 36px;
+  color: var(--textColor);
+  font-weight: 600;
+  margin-bottom: 30px;
+}
+
+.categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: space-between;
+}
+
+.category {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 500;
+  color: white;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.category:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.image {
+  border-radius: 50%;
+}
+
+.style {
+  background-color: #57c4dc;
+}
+
+.fashion {
+  background-color: #da85c6;
+}
+
+.food {
+  background-color: #7fb069;
+}
+
+.travel {
+  background-color: #ff6b6b;
+}
+
+.culture {
+  background-color: #ffd93d;
+}
+
+.coding {
+  background-color: #6c5ce7;
+}
+
+/* Responsive */
+@media screen and (max-width: 1024px) {
+  .title {
+    font-size: 28px;
+  }
+  
+  .categories {
+    justify-content: center;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .title {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .categories {
+    gap: 15px;
+  }
+  
+  .category {
+    font-size: 14px;
+    padding: 8px 16px;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .categories {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .category {
+    justify-content: center;
+  }
+}

@@ -1,0 +1,150 @@
+.container {
+  flex: 2;
+  margin-top: 60px;
+}
+
+.subtitle {
+  color: var(--primary-color);
+  font-size: 16px;
+  font-weight: 400;
+  margin-bottom: 10px;
+}
+
+.title {
+  color: var(--textColor);
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 30px;
+}
+
+.items {
+  display: flex;
+  flex-direction: column;
+  gap: 35px;
+  margin-bottom: 60px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  text-decoration: none;
+  transition: transform 0.3s ease;
+}
+
+.item:hover {
+  transform: translateY(-2px);
+}
+
+.imageContainer {
+  flex: 1;
+  aspect-ratio: 1/1;
+  position: relative;
+}
+
+.image {
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.textContainer {
+  flex: 4;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.category {
+  padding: 3px 8px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 500;
+  color: white;
+  background-color: var(--primary-color);
+  width: fit-content;
+}
+
+.postTitle {
+  font-size: 18px;
+  color: var(--textColor);
+  font-weight: 500;
+  line-height: 1.3;
+  transition: color 0.3s ease;
+}
+
+.postTitle:hover {
+  color: var(--primary-color);
+}
+
+.detail {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 5px;
+}
+
+.username {
+  color: var(--softTextColor);
+  font-size: 12px;
+}
+
+.date {
+  color: var(--softTextColor);
+  font-size: 12px;
+}
+
+/* Responsive */
+@media screen and (max-width: 1024px) {
+  .container {
+    margin-top: 40px;
+  }
+  
+  .title {
+    font-size: 24px;
+  }
+  
+  .postTitle {
+    font-size: 16px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    margin-top: 30px;
+  }
+  
+  .title {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .items {
+    margin-bottom: 40px;
+  }
+  
+  .item {
+    gap: 15px;
+  }
+  
+  .postTitle {
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .title {
+    font-size: 18px;
+  }
+  
+  .postTitle {
+    font-size: 13px;
+  }
+  
+  .category {
+    font-size: 10px;
+  }
+  
+  .username, .date {
+    font-size: 10px;
+  }
+}
