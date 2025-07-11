@@ -88,9 +88,9 @@ export default function PostPage({ params }: PostPageProps) {
           <div className={styles.aiInfo}>
             <h3>🤖 Información de generación automática</h3>
             <div className={styles.aiDetails}>
-              <p><strong>Fuente:</strong> {post.source}</p>
-              <p><strong>Modelo:</strong> {post.model}</p>
-              <p><strong>Confianza:</strong> {(post.confidence! * 100).toFixed(1)}%</p>
+              <p><strong>Fuente:</strong> {post.source || 'No especificado'}</p>
+              <p><strong>Modelo:</strong> {post.model || 'No especificado'}</p>
+              <p><strong>Confianza:</strong> {((post.confidence || 0) * 100).toFixed(1)}%</p>
             </div>
           </div>
         )}
