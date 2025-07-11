@@ -48,6 +48,7 @@ class AutoContentScheduler {
   async generateDailyContent() {
     try {
       console.log('🤖 Iniciando generación de contenido diario...');
+      console.log('📅 Fecha:', new Date().toISOString());
       
       // Seleccionar topic del día
       const today = new Date();
@@ -100,7 +101,7 @@ class AutoContentScheduler {
       
       if (isProduction) {
         // Usar almacén global para producción
-        PostStore.addPost(post);
+        await PostStore.addPost(post);
         console.log('💾 Post guardado exitosamente en almacén global (producción)');
         return;
       }
