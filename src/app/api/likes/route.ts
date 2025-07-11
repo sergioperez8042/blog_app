@@ -13,10 +13,10 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const success = PostStore.likePost(postId);
+    const success = await PostStore.likePost(postId);
     
     if (success) {
-      const post = PostStore.getPostById(postId);
+      const post = await PostStore.getPostById(postId);
       return NextResponse.json({ 
         success: true, 
         likes: post?.likes || 0,
@@ -50,7 +50,7 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const post = PostStore.getPostById(postId);
+    const post = await PostStore.getPostById(postId);
     
     if (post) {
       return NextResponse.json({ 

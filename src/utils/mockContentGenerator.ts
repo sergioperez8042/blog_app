@@ -1,4 +1,6 @@
 // Generador de contenido mock para desarrollo
+type Category = 'Technology' | 'Travel' | 'Food' | 'Fashion' | 'Culture';
+
 export const mockContentGenerator = {
   ideas: {
     'Technology': [
@@ -38,7 +40,7 @@ export const mockContentGenerator = {
     ]
   },
 
-  generateContent: (title, category, contentType) => {
+  generateContent: (title: any, category: Category, contentType: string) => {
     const timestamp = new Date().toLocaleString();
     
     if (contentType === 'ideas') {

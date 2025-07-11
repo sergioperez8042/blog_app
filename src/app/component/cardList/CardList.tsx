@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import styles from './cardList.module.css';
 import Pagination from '../pagination/Pagination';
@@ -24,8 +25,8 @@ interface Post {
 }
 
 // Función para obtener los posts desde PostStore
-function getPosts(): Post[] {
-  return PostStore.getAllPosts();
+async function getPosts(): Promise<Post[]> {
+  return await PostStore.getAllPosts();
 }
 
 // Función para obtener la imagen de categoría
@@ -57,8 +58,14 @@ function truncateContent(content: string, maxLength: number = 150): string {
   return content.substring(0, maxLength) + '...';
 }
 
+import { useEffect, useState } from 'react';
+
 const CardList: React.FC = () => {
-  const posts = getPosts();
+  const [posts, setPosts] = useState<Post[]>([]);
+
+  useEffect(() => {
+    getPosts().then(setPosts);
+  }, []);
 
   return (
     <div className={styles.container}>

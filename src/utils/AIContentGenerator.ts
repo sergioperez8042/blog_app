@@ -1,13 +1,42 @@
 import OpenAI from 'openai';
 
+// Interfaces para tipos
+interface GenerationOptions {
+  model?: string;
+  maxTokens?: number;
+  temperature?: number;
+  context?: string;
+  targetAudience?: string;
+  tone?: string;
+  style?: string;
+  wordCount?: number;
+}
+
+interface GenerationResult {
+  content: string;
+  source: string;
+  model: string;
+  confidence?: number;
+}
+
+type ContentType = 'ideas' | 'outline' | 'full';
+type Category = 'Technology' | 'Travel' | 'Food' | 'Fashion' | 'Culture' | 'Coding';
+
 export class AIContentGenerator {
+  private openai: OpenAI | null;
+
   constructor() {
     this.openai = process.env.OPENAI_API_KEY ? new OpenAI({
       apiKey: process.env.OPENAI_API_KEY,
     }) : null;
   }
 
-  async generateContent(title, category, contentType, options = {}) {
+  async generateContent(
+    title: string, 
+    category: string, 
+    contentType: ContentType, 
+    options: GenerationOptions = {}
+  ): Promise<GenerationResult> {
     const generators = [
       this.tryFineTunedModel.bind(this),
       this.tryStandardOpenAI.bind(this),
@@ -22,7 +51,7 @@ export class AIContentGenerator {
           return result;
         }
       } catch (error) {
-        console.log(`Generator failed: ${error.message}`);
+        console.log(`Generator failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
         continue;
       }
     }
@@ -30,7 +59,12 @@ export class AIContentGenerator {
     throw new Error('Todos los generadores fallaron');
   }
 
-  async tryFineTunedModel(title, category, contentType, options) {
+  async tryFineTunedModel(
+    title: string, 
+    category: string, 
+    contentType: ContentType, 
+    options: GenerationOptions
+  ): Promise<GenerationResult | null> {
     // TODO: Implementar fine-tuned model
     // if (this.fineTunedModelId) {
     //   return await this.generateWithFineTuned(title, category, contentType);
@@ -38,7 +72,12 @@ export class AIContentGenerator {
     return null;
   }
 
-  async tryStandardOpenAI(title, category, contentType, options) {
+  async tryStandardOpenAI(
+    title: string, 
+    category: string, 
+    contentType: ContentType, 
+    options: GenerationOptions
+  ): Promise<GenerationResult | null> {
     if (!this.openai) return null;
 
     const prompt = this.buildPrompt(title, category, contentType, options);
@@ -60,13 +99,18 @@ export class AIContentGenerator {
     });
 
     return {
-      content: completion.choices[0]?.message?.content,
+      content: completion.choices[0]?.message?.content || '',
       source: 'openai',
       model: options.model || "gpt-3.5-turbo"
     };
   }
 
-  async tryLocalAI(title, category, contentType, options) {
+  async tryLocalAI(
+    title: string, 
+    category: string, 
+    contentType: ContentType, 
+    options: GenerationOptions
+  ): Promise<GenerationResult | null> {
     try {
       // Intenta conectar con Ollama local
       const response = await fetch('http://localhost:11434/api/generate', {
@@ -94,7 +138,12 @@ export class AIContentGenerator {
     return null;
   }
 
-  useMockGenerator(title, category, contentType, options) {
+  useMockGenerator(
+    title: string, 
+    category: string, 
+    contentType: ContentType, 
+    options: GenerationOptions
+  ): GenerationResult {
     const templates = {
       ideas: this.generateIdeas(title, category),
       outline: this.generateOutline(title, category),
@@ -108,7 +157,12 @@ export class AIContentGenerator {
     };
   }
 
-  buildPrompt(title, category, contentType, options) {
+  buildPrompt(
+    title: string, 
+    category: string, 
+    contentType: ContentType, 
+    options: GenerationOptions
+  ): string {
     const basePrompts = {
       ideas: `Genera 5 ideas creativas para un artículo sobre "${title}" en la categoría ${category}.`,
       outline: `Crea un esquema detallado para un artículo sobre "${title}" en la categoría ${category}.`,
@@ -133,10 +187,10 @@ export class AIContentGenerator {
     return prompt;
   }
 
-  getSystemPrompt(category, style) {
+  getSystemPrompt(category: string, style?: string): string {
     const basePrompt = "Eres un escritor experto de blogs que crea contenido de alta calidad, informativo y atractivo.";
     
-    const categoryPrompts = {
+    const categoryPrompts: Record<string, string> = {
       Technology: "Especialízate en tecnología, explicando conceptos complejos de manera accesible.",
       Travel: "Eres un experto en viajes que inspira y guía a los lectores.",
       Food: "Eres un chef y food blogger que combina técnica culinaria con storytelling.",
@@ -144,7 +198,7 @@ export class AIContentGenerator {
       Culture: "Eres un antropólogo cultural que explora tradiciones y expresiones artísticas."
     };
 
-    const stylePrompts = {
+    const stylePrompts: Record<string, string> = {
       professional: "Mantén un tono profesional y autoritative.",
       casual: "Usa un tono conversacional y amigable.",
       academic: "Adopta un enfoque académico con referencias y análisis profundo.",
@@ -154,11 +208,11 @@ export class AIContentGenerator {
     return [
       basePrompt,
       categoryPrompts[category] || "",
-      stylePrompts[style] || ""
+      style ? stylePrompts[style] || "" : ""
     ].filter(Boolean).join(" ");
   }
 
-  generateIdeas(title, category) {
+  generateIdeas(title: string, category: string): string {
     const ideas = [
       `Análisis profundo de "${title}"`,
       `Guía práctica para implementar "${title}"`,
@@ -170,7 +224,7 @@ export class AIContentGenerator {
     return `Ideas para "${title}":\n\n${ideas.map((idea, i) => `${i + 1}. ${idea}`).join('\n')}`;
   }
 
-  generateOutline(title, category) {
+  generateOutline(title: string, category: string): string {
     return `Esquema para "${title}":
 
 I. Introducción
@@ -193,7 +247,7 @@ IV. Conclusión
    • Próximos pasos`;
   }
 
-  generateFullArticle(title, category, options) {
+  generateFullArticle(title: string, category: string, options: GenerationOptions): string {
     const wordCount = options.wordCount || 500;
     
     return `${title}
@@ -235,13 +289,17 @@ Generado con IA Híbrida - ${new Date().toLocaleString()}`;
   }
 
   // Métodos para entrenamiento y mejora continua
-  async learnFromFeedback(originalContent, editedContent, rating) {
+  async learnFromFeedback(originalContent: string, editedContent: string, rating: number): Promise<void> {
     // TODO: Implementar sistema de aprendizaje
     // Guardar feedback para entrenar modelos futuros
     console.log('Feedback recibido:', { originalContent, editedContent, rating });
   }
 
-  async analyzePerformance() {
+  async analyzePerformance(): Promise<{
+    bestPerformingCategory: string;
+    averageRating: number;
+    recommendedImprovements: string[];
+  }> {
     // TODO: Analizar qué tipo de contenido funciona mejor
     return {
       bestPerformingCategory: 'Technology',

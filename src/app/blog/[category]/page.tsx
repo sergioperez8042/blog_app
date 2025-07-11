@@ -38,9 +38,9 @@ function capitalizeFirst(str: string): string {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-export default function CategoryPage({ params }: CategoryPageProps) {
+export default async function CategoryPage({ params }: CategoryPageProps) {
   const categoryName = decodeURIComponent(params.category);
-  const posts = PostStore.getPostsByCategory(capitalizeFirst(categoryName));
+  const posts = await PostStore.getPostsByCategory(capitalizeFirst(categoryName));
 
   return (
     <div className={styles.container}>

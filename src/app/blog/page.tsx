@@ -31,6 +31,7 @@ function formatDate(dateString: string): string {
 
 export default function BlogPage() {
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
+  const [filteredPosts, setFilteredPosts] = useState<any[]>([]);
   
   const categories = ['All', 'Technology', 'Travel', 'Food', 'Fashion', 'Culture'];
   
@@ -38,9 +39,15 @@ export default function BlogPage() {
     setSelectedCategory(category);
   };
 
-  const filteredPosts = selectedCategory === 'All' 
-    ? PostStore.getAllPosts() 
-    : PostStore.getPostsByCategory(selectedCategory);
+  React.useEffect(() => {
+    const fetchPosts = async () => {
+      const posts = selectedCategory === 'All'
+        ? await PostStore.getAllPosts()
+        : await PostStore.getPostsByCategory(selectedCategory);
+      setFilteredPosts(posts);
+    };
+    fetchPosts();
+  }, [selectedCategory]);
 
   return (
     <div className={styles.container}>
