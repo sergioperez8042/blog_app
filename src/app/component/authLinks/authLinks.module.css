@@ -1,12 +1,79 @@
+.authContainer {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.authenticatedLinks {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
 .link {
-  color: var(--text-color);
+  color: var(--textColor);
   text-decoration: none;
-  margin-left: 20px;
-  font-weight: 500;
-  transition: color 0.3s ease;
-  cursor: pointer;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 20px;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
 }
 
 .link:hover {
-  color: var(--primary-color);
+  background: var(--softBg);
+  border-color: var(--textColor);
+}
+
+.userMenu {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 16px;
+  background: var(--softBg);
+  border-radius: 25px;
+  border: 2px solid var(--bg);
+}
+
+.userName {
+  color: var(--textColor);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.logoutButton {
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+  color: white;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 15px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.logoutButton:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .authenticatedLinks {
+    gap: 10px;
+  }
+  
+  .userMenu {
+    padding: 6px 12px;
+  }
+  
+  .userName {
+    display: none;
+  }
+  
+  .logoutButton {
+    padding: 8px 12px;
+    font-size: 0.8rem;
+  }
 }
