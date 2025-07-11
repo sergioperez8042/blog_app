@@ -1,4 +1,4 @@
-import mongoose, { Document, Schema } from 'mongoose';
+import mongoose, { Document, Schema, Model } from 'mongoose';
 
 // Interfaz para el documento Post
 export interface IPost extends Document {
@@ -19,6 +19,15 @@ export interface IPost extends Document {
     size: number;
     mimeType: string;
   };
+  // Métodos de instancia
+  incrementLikes(): Promise<IPost>;
+}
+
+// Interfaz para métodos estáticos
+interface IPostModel extends Model<IPost> {
+  getMostPopular(limit?: number): Promise<IPost[]>;
+  getRecent(limit?: number): Promise<IPost[]>;
+  getByCategory(category: string, limit?: number): Promise<IPost[]>;
 }
 
 // Schema de MongoDB para Posts
@@ -132,6 +141,13 @@ PostSchema.methods.incrementLikes = function() {
 };
 
 // Evitar recompilación del modelo
-const Post = mongoose.models.Post || mongoose.model<IPost>('Post', PostSchema);
+let Post: IPostModel;
+
+try {
+  Post = mongoose.model<IPost, IPostModel>('Post');
+} catch (error) {
+  Post = mongoose.model<IPost, IPostModel>('Post', PostSchema);
+}
 
 export default Post;
+export { IPost };
