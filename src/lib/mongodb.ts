@@ -1,9 +1,10 @@
 import mongoose from 'mongoose';
 
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/blog_app';
+const MONGODB_URI = process.env.MONGODB_URI || '';
 
-if (!MONGODB_URI) {
-  throw new Error('Please define the MONGODB_URI environment variable');
+// En producción, requerir la URI
+if (!MONGODB_URI && process.env.NODE_ENV === 'production') {
+  throw new Error('Please define the MONGODB_URI environment variable for production');
 }
 
 // Cached connection for serverless environments
@@ -14,6 +15,12 @@ if (!cached) {
 }
 
 export async function connectDB() {
+  // Si no hay URI de MongoDB, trabajar en modo sin DB
+  if (!MONGODB_URI) {
+    console.log('⚠️  No MongoDB URI provided, working without database');
+    return null;
+  }
+
   if (cached.conn) {
     console.log('📡 Usando conexión MongoDB existente');
     return cached.conn;
