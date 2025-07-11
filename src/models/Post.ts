@@ -24,7 +24,7 @@ export interface IPost extends Document {
 }
 
 // Interfaz para métodos estáticos
-interface IPostModel extends Model<IPost> {
+export interface IPostModel extends Model<IPost> {
   getMostPopular(limit?: number): Promise<IPost[]>;
   getRecent(limit?: number): Promise<IPost[]>;
   getByCategory(category: string, limit?: number): Promise<IPost[]>;
@@ -150,4 +150,3 @@ try {
 }
 
 export default Post;
-export { IPost };

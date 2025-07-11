@@ -28,11 +28,13 @@ export class PostStore {
     }
   }
 
-  static async addPost(post: Post): Promise<void> {
+  static async addPost(post: Post): Promise<Post | null> {
     try {
-      await PostStoreDB.addPost(post);
+      const savedPost = await PostStoreDB.addPost(post);
+      return savedPost;
     } catch (error) {
       console.error('Error adding post:', error);
+      return null;
     }
   }
 
@@ -118,6 +120,26 @@ export class PostStore {
     } catch (error) {
       console.error('Error getting latest posts:', error);
       return [];
+    }
+  }
+
+  static async updatePost(id: string, updates: Partial<Post>): Promise<Post | null> {
+    try {
+      const updatedPost = await PostStoreDB.updatePost(id, updates);
+      return updatedPost;
+    } catch (error) {
+      console.error('Error updating post:', error);
+      return null;
+    }
+  }
+
+  static async deletePost(id: string): Promise<boolean> {
+    try {
+      const deleted = await PostStoreDB.deletePost(id);
+      return deleted;
+    } catch (error) {
+      console.error('Error deleting post:', error);
+      return false;
     }
   }
 }

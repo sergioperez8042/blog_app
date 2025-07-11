@@ -42,10 +42,10 @@ export async function POST(request: NextRequest) {
 
     // En producción, usar almacén global
     if (process.env.NODE_ENV === 'production') {
-      PostStore.addPost(newPost);
+      const savedPost = await PostStore.addPost(newPost);
       return NextResponse.json({
         message: 'Post creado exitosamente',
-        post: newPost,
+        post: savedPost,
         success: true
       });
     }
@@ -80,8 +80,9 @@ export async function GET() {
   try {
     // En producción, usar almacén global
     if (process.env.NODE_ENV === 'production') {
+      const posts = await PostStore.getAllPosts();
       return NextResponse.json({
-        posts: PostStore.getAllPosts(),
+        posts,
         success: true
       });
     }
@@ -98,6 +99,142 @@ export async function GET() {
 
   } catch (error) {
     console.error('Error reading posts:', error);
+    return NextResponse.json(
+      { error: 'Error interno del servidor' },
+      { status: 500 }
+    );
+  }
+}
+
+export async function PUT(request: NextRequest) {
+  try {
+    const { id, title, category, content, author } = await request.json();
+
+    if (!id || !title || !category || !content) {
+      return NextResponse.json(
+        { error: 'ID, título, categoría y contenido son requeridos' },
+        { status: 400 }
+      );
+    }
+
+    // En producción, usar almacén global
+    if (process.env.NODE_ENV === 'production') {
+      const updatedPost = await PostStore.updatePost(id, {
+        title,
+        category,
+        content,
+        author: author || 'Admin'
+      });
+      
+      if (!updatedPost) {
+        return NextResponse.json(
+          { error: 'Post no encontrado' },
+          { status: 404 }
+        );
+      }
+
+      return NextResponse.json({
+        message: 'Post actualizado exitosamente',
+        post: updatedPost,
+        success: true
+      });
+    }
+
+    // En desarrollo, usar archivo
+    await ensurePostsFile();
+    const postsData = await readFile(POSTS_FILE, 'utf8');
+    const posts: Post[] = JSON.parse(postsData);
+
+    const postIndex = posts.findIndex(p => p.id === id);
+    if (postIndex === -1) {
+      return NextResponse.json(
+        { error: 'Post no encontrado' },
+        { status: 404 }
+      );
+    }
+
+    // Actualizar el post
+    posts[postIndex] = {
+      ...posts[postIndex],
+      title,
+      category,
+      content,
+      author: author || posts[postIndex].author
+    };
+
+    // Guardar posts actualizados
+    await writeFile(POSTS_FILE, JSON.stringify(posts, null, 2));
+
+    return NextResponse.json({
+      message: 'Post actualizado exitosamente',
+      post: posts[postIndex],
+      success: true
+    });
+
+  } catch (error) {
+    console.error('Error updating post:', error);
+    return NextResponse.json(
+      { error: 'Error interno del servidor' },
+      { status: 500 }
+    );
+  }
+}
+
+export async function DELETE(request: NextRequest) {
+  try {
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get('id');
+
+    if (!id) {
+      return NextResponse.json(
+        { error: 'ID del post es requerido' },
+        { status: 400 }
+      );
+    }
+
+    // En producción, usar almacén global
+    if (process.env.NODE_ENV === 'production') {
+      const deleted = await PostStore.deletePost(id);
+      
+      if (!deleted) {
+        return NextResponse.json(
+          { error: 'Post no encontrado' },
+          { status: 404 }
+        );
+      }
+
+      return NextResponse.json({
+        message: 'Post eliminado exitosamente',
+        success: true
+      });
+    }
+
+    // En desarrollo, usar archivo
+    await ensurePostsFile();
+    const postsData = await readFile(POSTS_FILE, 'utf8');
+    const posts: Post[] = JSON.parse(postsData);
+
+    const postIndex = posts.findIndex(p => p.id === id);
+    if (postIndex === -1) {
+      return NextResponse.json(
+        { error: 'Post no encontrado' },
+        { status: 404 }
+      );
+    }
+
+    // Eliminar el post
+    posts.splice(postIndex, 1);
+
+    // Guardar posts actualizados
+    await writeFile(POSTS_FILE, JSON.stringify(posts, null, 2));
+
+    return NextResponse.json({
+      message: 'Post eliminado exitosamente',
+      success: true
+    });
+
+  } catch (error) {
+    console.error('Error deleting post:', error);
     return NextResponse.json(
       { error: 'Error interno del servidor' },
       { status: 500 }
