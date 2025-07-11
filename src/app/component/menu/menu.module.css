@@ -93,6 +93,69 @@
   font-size: 12px;
 }
 
+.aiTag {
+  background: linear-gradient(45deg, #ff6b35, #f7931e);
+  color: white;
+  padding: 2px 6px;
+  border-radius: 8px;
+  font-size: 10px;
+  font-weight: 600;
+  margin-left: 5px;
+}
+
+.noContent {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--softTextColor);
+}
+
+.noContent p {
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+.categoryList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.categoryItem {
+  padding: 8px 16px;
+  border-radius: 20px;
+  color: white;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.categoryItem:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.technology {
+  background: linear-gradient(45deg, #667eea, #764ba2);
+}
+
+.travel {
+  background: linear-gradient(45deg, #f093fb, #f5576c);
+}
+
+.food {
+  background: linear-gradient(45deg, #4facfe, #00f2fe);
+}
+
+.fashion {
+  background: linear-gradient(45deg, #43e97b, #38f9d7);
+}
+
+.culture {
+  background: linear-gradient(45deg, #fa709a, #fee140);
+}
+
 /* Responsive */
 @media screen and (max-width: 1024px) {
   .container {

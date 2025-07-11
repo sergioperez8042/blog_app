@@ -63,6 +63,31 @@
   background-color: var(--hover-color);
 }
 
+.postMeta {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 10px;
+}
+
+.category {
+  color: var(--primary-color);
+  font-weight: 600;
+  font-size: 16px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.aiTag {
+  background: linear-gradient(45deg, #ff6b35, #f7931e);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: 0 4px 8px rgba(255, 107, 53, 0.3);
+}
+
 /* Responsive */
 @media screen and (max-width: 1280px) {
   .title {

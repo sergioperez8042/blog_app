@@ -56,6 +56,39 @@
   font-size: 14px;
 }
 
+.aiTag {
+  background: linear-gradient(45deg, #ff6b35, #f7931e);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.noPosts {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--softTextColor);
+}
+
+.noPosts p {
+  margin: 10px 0;
+  font-size: 16px;
+}
+
+.postMeta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.author {
+  color: var(--softTextColor);
+  font-size: 14px;
+  font-style: italic;
+}
+
 .postTitle {
   font-size: 24px;
   color: var(--textColor);
