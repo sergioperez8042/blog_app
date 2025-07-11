@@ -292,14 +292,29 @@
   transform: none;
 }
 
-@media (max-width: 768px) {
-  .aiButtons {
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .aiButton {
-    width: 100%;
-    max-width: 200px;
-  }
+.viewPostContainer {
+  margin-top: 15px;
+  text-align: center;
+}
+
+.viewPostButton {
+  background: linear-gradient(135deg, #1e90ff 0%, #667eea 100%);
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(30, 144, 255, 0.2);
+}
+
+.viewPostButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(30, 144, 255, 0.4);
+}
+
+.viewPostButton:active {
+  transform: translateY(0);
 }

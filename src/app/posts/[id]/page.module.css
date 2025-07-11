@@ -187,31 +187,31 @@
 }
 
 .likeButton {
-  padding: 1rem 2rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 0.8rem 2rem;
+  border-radius: 25px;
   font-size: 1.1rem;
   font-weight: 600;
-  border: none;
-  border-radius: 25px;
   cursor: pointer;
   transition: all 0.3s ease;
-  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-  color: white;
-  box-shadow: 0 4px 15px rgba(79, 172, 254, 0.3);
+  margin-bottom: 1rem;
 }
 
 .likeButton:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(79, 172, 254, 0.4);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
 }
 
 .likeButton:disabled {
-  opacity: 0.6;
+  background: #ccc;
   cursor: not-allowed;
+  transform: none;
 }
 
 .likeButton.liked {
-  background: linear-gradient(135deg, #56ab2f 0%, #a8e6cf 100%);
-  box-shadow: 0 4px 15px rgba(86, 171, 47, 0.3);
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
 }
 
 .likeText {

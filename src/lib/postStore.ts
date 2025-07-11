@@ -13,6 +13,9 @@ export interface Post {
   likes?: number;
 }
 
+// Importar eventos
+import { postEvents } from './events';
+
 // Posts en memoria para producción
 let globalPosts: Post[] = [
   {
@@ -91,6 +94,8 @@ export class PostStore {
     const post = globalPosts.find(p => p.id === postId);
     if (post) {
       post.likes = (post.likes || 0) + 1;
+      // Emitir evento para actualizar componentes
+      postEvents.emit('likeUpdated', postId, post.likes);
       return true;
     }
     return false;

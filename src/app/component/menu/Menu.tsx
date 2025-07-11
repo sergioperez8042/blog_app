@@ -1,10 +1,11 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './menu.module.css';
 import Link from 'next/link';
 import Image from 'next/image';
 import { PostStore } from '@/lib/postStore';
+import { postEvents } from '@/lib/events';
 
 interface Post {
   id: string;
@@ -52,7 +53,31 @@ function formatDate(dateString: string): string {
 }
 
 const Menu: React.FC = () => {
-  const popularPosts = getPopularPosts().slice(0, 4); // Mostrar solo los primeros 4
+  const [popularPosts, setPopularPosts] = useState(getPopularPosts().slice(0, 4));
+
+  // Función para actualizar posts
+  const updatePosts = () => {
+    setPopularPosts(getPopularPosts().slice(0, 4));
+  };
+
+  useEffect(() => {
+    // Escuchar eventos de like para actualizar inmediatamente
+    const handleLikeUpdate = () => {
+      updatePosts();
+    };
+
+    postEvents.on('likeUpdated', handleLikeUpdate);
+
+    // Cleanup
+    return () => {
+      postEvents.off('likeUpdated', handleLikeUpdate);
+    };
+  }, []);
+
+  // También actualizar cuando el componente se monta
+  useEffect(() => {
+    updatePosts();
+  }, []);
 
   return (
     <div className={styles.container}>
