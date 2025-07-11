@@ -39,9 +39,6 @@ const AuthLinks: React.FC = () => {
         </Link>
       ) : (
         <div className={styles.authenticatedLinks}>
-          <Link href="/write" className={styles.link}>
-            Escribir
-          </Link>
           <Link href="/admin" className={styles.link}>
             Admin
           </Link>
@@ -57,6 +54,13 @@ const AuthLinks: React.FC = () => {
               Logout
             </button>
           </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default AuthLinks;
         </div>
       )}
     </div>
