@@ -63,3 +63,60 @@
 .button:hover {
   background-color: var(--hover-color);
 }
+
+.aiTools {
+  padding: 20px;
+  background-color: var(--soft-bg);
+  border-radius: 8px;
+  border: 2px solid var(--primary-color);
+  margin: 20px 0;
+}
+
+.aiTools h3 {
+  color: var(--primary-color);
+  margin-bottom: 15px;
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+.aiButtons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.aiButton {
+  padding: 10px 20px;
+  background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 25px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.aiButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.aiButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+@media (max-width: 768px) {
+  .aiButtons {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .aiButton {
+    width: 100%;
+    max-width: 200px;
+  }
+}
