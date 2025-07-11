@@ -318,3 +318,106 @@
 .viewPostButton:active {
   transform: translateY(0);
 }
+
+/* Media Upload Styles */
+.fileInput {
+  padding: 15px 20px;
+  border: 2px dashed var(--bg);
+  border-radius: 15px;
+  background: var(--softBg);
+  color: var(--textColor);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.fileInput:hover {
+  border-color: var(--textColor);
+  background: var(--bg);
+}
+
+.fileInput:focus {
+  outline: none;
+  border-color: var(--textColor);
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.progressContainer {
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.progressBar {
+  flex: 1;
+  height: 8px;
+  background: var(--bg);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+  transition: width 0.3s ease;
+}
+
+.progressText {
+  font-size: 0.9rem;
+  color: var(--softTextColor);
+  font-weight: 600;
+  min-width: 40px;
+}
+
+.mediaPreview {
+  margin-top: 15px;
+  padding: 20px;
+  background: var(--bg);
+  border-radius: 15px;
+  border: 2px solid var(--softBg);
+}
+
+.mediaPreview p {
+  margin: 5px 0;
+  color: var(--textColor);
+  font-size: 0.95rem;
+}
+
+.removeButton {
+  background: linear-gradient(135deg, #ff4757 0%, #ff3838 100%);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+}
+
+.removeButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(255, 71, 87, 0.3);
+}
+
+.removeButton:active {
+  transform: translateY(0);
+}
+
+/* Responsive Media Upload */
+@media (max-width: 768px) {
+  .progressContainer {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .progressText {
+    min-width: auto;
+  }
+  
+  .mediaPreview {
+    padding: 15px;
+  }
+}
